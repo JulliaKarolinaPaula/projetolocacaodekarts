@@ -224,7 +224,7 @@ inicio
            lucro_dia <-  lucro_dia + vet_valorlocados[i]
         fimse
     fimpara
-    se (valor_circuito > 0) entao
+    se ((valor_circuito > 0) e (circuito = "S")) entao
     lucro_dia <- lucro_dia + valor_circuito
     fimse
     
