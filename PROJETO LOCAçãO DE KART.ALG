@@ -1,5 +1,5 @@
 Algoritmo "Projeto LocaÁ„o de Kart"
-// Disciplina : [Conceitos de Algor√≠tmos]
+// Disciplina : [Conceitos de AlgorÌtmos]
 // Professor : Gilberto
 // Nome da 'empresa/grupo de desenvolvimento' : GRUPO AVANT-GARD
 // Integrantes do grupo: Jullia, Andreia, Maria Clara, Adriano, Pedro
@@ -10,25 +10,33 @@ Var
    vet_modelo:vetor[0..14] de caracter
    vet_valor:vetor[0..14] de real
    vet_locados:vetor[0..14] de caracter
-   mat_circuito: vetor[0..11,0..1] de caracter
+   vet_valorlocados:vetor [0..14] de real
    //inteiro
    menu: inteiro
    m: inteiro
    res: inteiro
    opcao: inteiro
+   i_maior_valor:inteiro
    //real
    var_valor: real
+   maior_valor: real
+   valor_circuito: real
    //caracter
    rodada: caracter
    sair: caracter
    var_modelo: caracter
    sair_cadastro: caracter
+   maior_kart: caracter
+   circuito: caracter
+
 
 funcao cadastrar_kart: caracter
 var aux: caracter
 inicio
    sair_cadastro <- "S"
-   enquanto (sair_cadastro <> "N") faca
+
+
+   enquanto (sair_cadastro = "S") faca
       escreval("DIGITE O MODELO DO KART PARA O  CADASTRO:")
       leia(var_modelo)
       vet_modelo[m] <- var_modelo
@@ -56,100 +64,164 @@ inicio
    se (ver_vazio = 1) ent„o
       para i de 0 ate 14 passo 1 faca
          se((vet_modelo[i] <> "") e (vet_valor[i] <> 0))entao
-            escreval("MODELO: ",vet_modelo[i])
-            escreval("VALOR: R$ ",vet_valor[i]," ,00")
+            escreval(i,". ",vet_modelo[i]," | ","VALOR: R$ ",vet_valor[i]," ,00")
          fimse
       fimpara
    senao
-      escreval("N√O H¡Å KARTS DISPONÕVEIS OU CADASTRADOS")
+      escreval("NAO HAÅ KARTS DISPONIVEIS OU CADASTRADOS")
+   fimse
+
+   retorne aux
+fimfuncao
+
+funcao listar_locados: caracter
+var vazio, i: inteiro
+   aux: caracter
+inicio
+   para i de 0 ate 14 faca
+      se (vet_locados[i] <> "") entao
+         vazio <- 1
+      fimse
+   fimpara
+   se(vazio = 1)entao
+      escreval("OS KARTS LOCADOS SAO: ")
+      para i de 0 ate 14 passo 1 faca
+         se(vet_locados[i] <> "")entao
+            escreval(i,": ", vet_locados[i])
+         fimse
+      fimpara
+   senao
+      escreval("NAO HAÅKARTS LOCADOS NO MOMENTO.")
+   fimse
+
+   retorne aux
+fimfuncao
+
+funcao alugar_kart: caracter
+var posicao, vazio, i: inteiro
+   aux, sair_aluga: caracter
+inicio
+   para i de 0 ate 14 passo 1 faca
+      se(vet_modelo[i] <> "")entao
+         vazio <- 1
+      fimse
+   fimpara
+
+   se(vazio = 1) entao
+      escreval("KARTS DISPONIVEIS:")
+      escreval(listar_karts)
+      sair_aluga <- "S"
+      repita
+         escreva("DIGITE O NUMERO DO KART QUE VOCE DESEJA: ")
+         leia(posicao)
+
+         vet_locados[posicao] <- vet_modelo[posicao]
+         vet_valorlocados[posicao] <- vet_valor[posicao]
+         vet_modelo[posicao] <- ""
+         vet_valor[posicao] <- 0
+
+         escreval("ALUGAR OUTRO KART DISPONIVEL? S/N")
+         leia(sair_aluga)
+         sair_aluga <- Maiusc(sair_aluga)
+         se (sair_aluga = "N") ent„o
+            sair_aluga <- "N"
+         fimse
+      atÈ (sair_aluga = "N")
+   senao
+      escreval("NAO HA KARTS DISPONIVEIS OU CADASTRADOS.")
+   fimse
+
+   retorne aux
+fimfuncao
+
+funcao devolver_kart: caracter
+var  posicao,vazio, i: inteiro
+   aux, sair_devol: caracter
+inicio
+   para i de 0 ate 14 passo 1 faca
+      se(vet_locados[i] <> "")entao
+         vazio <- 1
+      fimse
+   fimpara
+
+   se(vazio = 1)entao
+      repita
+         escreval("DESEJA DEVOLVER QUAL KART LOCADO?")
+         escreval(listar_locados)
+         escreva("DIGITE O NUMERO CORRESPONDENTE: ")
+         leia(posicao)
+
+         vet_modelo[posicao] <- vet_locados[posicao]
+         vet_valor[posicao] <- vet_valorlocados[posicao]
+         vet_locados[posicao] <- ""
+         vet_valorlocados[posicao] <- 0
+
+         escreval("DESEJA DEVOLVER MAIS ALGUM? S/N")
+         leia(sair_devol)
+         sair_devol <- Maiusc(sair_devol)
+         se (sair_devol = "N") ent„o
+            sair_devol <- "N"
+         fimse
+      ate(sair_devol = "N")
+   senao
+      escreval("NAO HA KARTS LOCADOS OU CADASTRADOS NO MOMENTO.")
    fimse
    retorne aux
 fimfuncao
 
-procedimento listar_locados()
-var
+funcao mais_ganhou: caracter
+var posicao, i: inteiro
+   sair_ganho, aux: caracter
 inicio
-   escreval("OS KARTS LOCADOS S√O: ")
-   para m de 0 ate 14 faca
-      se (vet_locados[m] <> "") ent„o
-         escreval(vet_locados[m])
+   para i de 0 ate 14 passo 1 faca
+      se (vet_locados[posicao] <> "") entao
+         maior_valor <- vet_valorlocados[posicao]
       fimse
    fimpara
-fimprocedimento
-
-funcao alugar_kart: caracter
-var posicao: inteiro
-   aux, sair_aluga: caracter
-inicio
-   escreval("KARTS DISPONIVEIS:")
-   escreval(listar_karts)
-   sair_aluga <- "S"
-   repita
-      escreva("DIGITE O N⁄MERO DO KART QUE VOC  DESEJA: ")
-      leia(posicao)
-
-      vet_locados[posicao] <- vet_modelo[posicao]
-
-      escreval("DESEJA ALUGAR MAIS UM? S/N")
-      leia(sair_aluga)
-      sair_aluga <- Maiusc(sair_aluga)
-      se (sair_aluga = "N") ent„o
-         sair_aluga <- "N"
-      fimse
-   atÈ (sair_aluga = "N")
-
+   maior_valor <- 0
+   maior_kart <- ""
+   se((vet_valorlocados[posicao] > maior_valor) e (vet_locados[posicao] > maior_kart)) entao
+      maior_valor <- vet_valorlocados[posicao]
+      maior_kart <- vet_locados[posicao]
+      escreval("O KART ", maior_kart," FOI O QUE MAIS GEROU GANNHOS, ", maior_valor)
+   senao
+      escreval("NAO HA KARTS LOCADOS")
+   fimse
    retorne aux
 fimfuncao
 
-procedimento listar_horarios()
-var i,j: inteiro
+funcao alugar_circuito: caracter
+var aux: caracter
 inicio
-   escreval("Grade de Hor·rios:")
-   para i de 0 ate 11 faca
-      para j de 0 ate 1 faca
-         escreva(mat_circuito[i,j])
-      fimpara
-      escreval
-   fimpara
-fimprocedimento
-
-procedimento alugar_circuito()
-var i,j, horario: inteiro
-   nome, sair_circuito: caracter
-inicio
-   sair_circuito <- "S"
-   repita
-      listar_horarios()
-      escreval("Escolha o hor·rio que deseja:")
-      leia(horario)
-      escreval("Digite o nome de quem est· reservando: ")
-      leia(nome)
-
-      para i de 0 ate 11 faca
-         para j de 0 ate 1 faca
-            mat_circuito[(horario-1),1] <- nome
-         fimpara
-      fimpara
-
-      escreval("Hor·rio escolhido: ", mat_circuito[(horario-1),0])
-
-      escreval("Deseja reservar mais um hor·rio? S/N")
-      leia(sair_circuito)
-      sair_circuito <- Maiusc(sair_circuito)
-   ate (sair_circuito = "N")
-fimprocedimento
+   se (circuito = "") entao
+      repita
+         escreval("ALUGAR CIRCUITO? S/N")
+         leia(circuito)
+         circuito <- Maiusc(circuito)
+      ate ((circuito = "S") ou (circuito = "N"))
+   senao
+      escreval("O CIRCUITO J¡ EST¡ LOCADO PELO VALOR DE R$", valor_circuito, ",00")
+   fimse
+   
+   se (valor_circuito = 0) entao
+      escreval("DIGITE O VALOR DO CIRCUITO: ")
+      leia(valor_circuito)
+   fimse
+   
+retorne aux
+fimfuncao
 
 
 Inicio
    rodada <- "S"
    enquanto (rodada = "S") faca
-      escreval("BEM-VINDO AO GERENCIAMENTO DE LOCA«√O DE KARTS!!")
-      escreval("DIGITE UM N⁄MERO PARA SELECIONAR A OP«√OO DESEJADA")
+      escreval("BEM-VINDO AO GERENCIAMENTO DE LOCA«AO DE KARTS!!")
+      escreval("DIGITE UM NUMERO PARA SELECIONAR A OP«AO DESEJADA")
       escreval
 
       repita
          escreval("1. CADASTRAR UM KART")
-         escreval("2. LISTAR KARTS DISPONÕVEIS")
+         escreval("2. LISTAR KARTS DISPONIVEIS")
          escreval("3. LISTAR KARTS LOCADOS")
          escreval("4. ALUGAR UM KART")
          escreval("5. DEVOLVER UM KART")
@@ -169,13 +241,13 @@ Inicio
             escreval(cadastrar_kart)
 
          caso 2
-            escreval("2. LISTAR KARTS DISPONÕVEIS")
+            escreval("2. LISTAR KARTS DISPONIVEIS")
 
             escreval(listar_karts)
          caso 3
             escreval("3. LISTAR KARTS LOCADOS")
 
-            listar_locados()
+            escreval(listar_locados)
 
          caso 4
             escreval("4. ALUGAR UM KART")
@@ -183,35 +255,16 @@ Inicio
 
          caso 5
             escreval("5. DEVOLVER UM KART")
+
+            escreval(devolver_kart)
          caso 6
             escreval("6. KART QUE MAIS GEROU GANHOS")
+            escreval(mais_ganhou)
          caso 7
             escreval("7. RECEITA E LUCROS DO DIA (Considerando karts locados)")
          caso 8
             escreval("8. LOCA«√O DE CIRCUITO")
-            mat_circuito[0,0] <- "1 - 08:00Hs"
-            mat_circuito[1,0] <- "2 - 09:00Hs"
-            mat_circuito[2,0] <- "3 - 10:00Hs"
-            mat_circuito[3,0] <- "4 - 11:00Hs"
-            mat_circuito[4,0] <- "5 - 12:00Hs"
-            mat_circuito[5,0] <- "6 - 13:00Hs"
-            mat_circuito[6,0] <- "7 - 14:00Hs"
-            mat_circuito[7,0] <- "8 - 15:00Hs"
-            mat_circuito[8,0] <- "9 - 16:00Hs"
-            mat_circuito[9,0] <- "10 - 17:00Hs"
-            mat_circuito[10,0] <- "11 - 18:00Hs"
-            mat_circuito[11,0] <- "12 - 19:00Hs"
-
-            escreval("Escolha a opÁ„o desejada: ")
-            escreval("1 - Agendar hor·rio")
-            escreval("2 - Listar hor·rios")
-            leia(opcao)
-            escolha (opcao)
-               caso 1
-                  alugar_circuito()
-               caso 2
-                  listar_horarios()
-            fimescolha
+            escreval(alugar_circuito)
 
          caso 9
             escreval("9. ATUALIZAR DIA")
@@ -226,7 +279,7 @@ Inicio
             leia(sair)
             sair <- Maiusc(sair)
             se(sair = "S")entao
-               escreval("OBRIGADO PELA PREFER√äNCIA, VOLTE SEMPRE!!")
+               escreval("OBRIGADO PELA PREFERENCIA, VOLTE SEMPRE!!")
                rodada <- "N"
             fimse
          ate((sair = "S") ou (sair = "N"))
@@ -241,7 +294,7 @@ Inicio
             rodada <- Maiusc(rodada)
             se (rodada = "N") entao
                escreval
-               escreval("OBRIGADO PELA PREFER√äNCIA, VOLTE SEMPRE!!")
+               escreval("OBRIGADO PELA PREFERENCIA, VOLTE SEMPRE!!")
             fimse
          ate ((rodada = "S") ou (rodada = "N"))
       fimse
