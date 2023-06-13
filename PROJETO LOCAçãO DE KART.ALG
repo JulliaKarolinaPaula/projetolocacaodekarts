@@ -101,17 +101,18 @@ funcao alugar_kart: caracter
 var posicao, vazio, i: inteiro
    aux, sair_aluga: caracter
 inicio
-   para i de 0 ate 14 passo 1 faca
-      se(vet_modelo[i] <> "")entao
-         vazio <- 1
-      fimse
-   fimpara
+   repita
+      vazio <- 0
+      para i de 0 ate 14 passo 1 faca
+         se(vet_modelo[i] <> "")entao
+            vazio <- 1
+         fimse
+      fimpara
 
-   se(vazio = 1) entao
-      escreval("KARTS DISPONIVEIS:")
-      escreval(listar_karts)
-      sair_aluga <- "S"
-      repita
+      se(vazio = 1) entao
+         escreval("KARTS DISPONIVEIS:")
+         escreval(listar_karts)
+         sair_aluga <- "S"
          escreva("DIGITE O NUMERO DO KART QUE VOCE DESEJA: ")
          leia(posicao)
 
@@ -126,12 +127,13 @@ inicio
          se (sair_aluga = "N") então
             sair_aluga <- "N"
          fimse
-      até (sair_aluga = "N")
-   senao
-      escreval("NAO HA KARTS DISPONIVEIS OU CADASTRADOS.")
-   fimse
-
+      senao
+         escreval("NAO HA KARTS DISPONIVEIS OU CADASTRADOS.")
+         sair_aluga <- "N"
+      fimse
+   ate (sair_aluga = "N")
    retorne aux
+
 fimfuncao
 
 funcao devolver_kart: caracter
@@ -202,13 +204,33 @@ inicio
    senao
       escreval("O CIRCUITO JÁ ESTÁ LOCADO PELO VALOR DE R$", valor_circuito, ",00")
    fimse
-   
+
    se (valor_circuito = 0) entao
       escreval("DIGITE O VALOR DO CIRCUITO: ")
       leia(valor_circuito)
    fimse
-   
-retorne aux
+
+   retorne aux
+fimfuncao
+
+
+funcao receita_dia: real
+var
+   lucro_dia: real
+   i: inteiro
+
+inicio
+
+   para i de 0 ate 14 passo 1 faca
+      se ((vet_locados[i] <> "") e (vet_valorlocados[i] > 0)) entao
+         lucro_dia <-  lucro_dia + vet_valorlocados[i]
+      fimse
+   fimpara
+   se ((valor_circuito > 0) e (circuito = "S")) entao
+      lucro_dia <- lucro_dia + valor_circuito
+   fimse
+
+   retorne lucro_dia
 fimfuncao
 
 
@@ -226,7 +248,7 @@ Inicio
          escreval("4. ALUGAR UM KART")
          escreval("5. DEVOLVER UM KART")
          escreval("6. KART QUE MAIS GEROU GANHOS")
-         escreval("7. RECEITA E LUCROS DO DIA (Considerando karts locados)")
+         escreval("7. RECEITA E LUCROS DO DIA")
          escreval("8. LOCAÇÃO DE CIRCUITO")
          escreval("9. ATUALIZAR DIA")
          escreval("10. SAIR DO PROGRAMA")
@@ -262,6 +284,7 @@ Inicio
             escreval(mais_ganhou)
          caso 7
             escreval("7. RECEITA E LUCROS DO DIA (Considerando karts locados)")
+            escreval(receita_dia)
          caso 8
             escreval("8. LOCAÇÃO DE CIRCUITO")
             escreval(alugar_circuito)
