@@ -14,7 +14,7 @@ Var
    mat_circuito: vetor[0..11,0..1] de caracter
    //inteiro
    menu: inteiro
-   i: inteiro
+   m: inteiro
    res: inteiro
    opcao: inteiro
    i_maior_valor:inteiro
@@ -34,14 +34,15 @@ var aux: caracter
 inicio
    sair_cadastro <- "S"
 
-   enquanto (sair_cadastro <> "N") faca
+
+    enquanto (sair_cadastro = "S") faca
       escreval("DIGITE O MODELO DO KART PARA O  CADASTRO:")
       leia(var_modelo)
-      vet_modelo[i] <- var_modelo
+      vet_modelo[m] <- var_modelo
       escreval("DIGITE O VALOR DO KART PARA O  CADASTRO:")
       leia(var_valor)
-      vet_valor[i] <- var_valor
-      i <- i+1
+      vet_valor[m] <- var_valor
+      m <- m+1
       escreval("DESEJA CADASTRAR OUTRO VEICULO? S/N")
       leia(sair_cadastro)
       sair_cadastro <- Maiusc(sair_cadastro)
@@ -96,7 +97,7 @@ inicio
 fimfuncao
 
 funcao alugar_kart: caracter
-var posicao, vazio: inteiro
+var posicao, vazio, i: inteiro
    aux, sair_aluga: caracter
 inicio
  para i de 0 ate 14 passo 1 faca
