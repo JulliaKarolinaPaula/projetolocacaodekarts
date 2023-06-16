@@ -17,6 +17,7 @@ Var
    res: inteiro
    opcao: inteiro
    i_maior_valor:inteiro
+   atualizacao_valor: inteiro
    //real
    var_valor: real
    maior_valor: real
@@ -140,14 +141,15 @@ funcao devolver_kart: caracter
 var  posicao,vazio, i: inteiro
    aux, sair_devol: caracter
 inicio
-   para i de 0 ate 14 passo 1 faca
-      se(vet_locados[i] <> "")entao
-         vazio <- 1
-      fimse
-   fimpara
+   repita
+      vazio <- 0
+      para i de 0 ate 14 passo 1 faca
+         se(vet_locados[i] <> "")entao
+            vazio <- 1
+         fimse
+      fimpara
 
-   se(vazio = 1)entao
-      repita
+      se(vazio = 1)entao
          escreval("DESEJA DEVOLVER QUAL KART LOCADO?")
          escreval(listar_locados)
          escreva("DIGITE O NUMERO CORRESPONDENTE: ")
@@ -164,10 +166,11 @@ inicio
          se (sair_devol = "N") então
             sair_devol <- "N"
          fimse
-      ate(sair_devol = "N")
-   senao
-      escreval("NAO HA KARTS LOCADOS OU CADASTRADOS NO MOMENTO.")
-   fimse
+      senao
+         escreval("NAO HA KARTS LOCADOS OU CADASTRADOS NO MOMENTO.")
+         sair_devol <- "N"
+      fimse
+   ate(sair_devol = "N")
    retorne aux
 fimfuncao
 
@@ -214,25 +217,63 @@ inicio
 fimfuncao
 
 
-funcao receita_dia: real
+funcao receita_dia: caractere
 var
-   lucro_dia: real
+   lucro_dia, receita, valor_locados: real
    i: inteiro
+   aux: caracter
 
 inicio
 
    para i de 0 ate 14 passo 1 faca
       se ((vet_locados[i] <> "") e (vet_valorlocados[i] > 0)) entao
-         lucro_dia <-  lucro_dia + vet_valorlocados[i]
+         receita <- receita + vet_valorlocados[i]
+
+         valor_locados <-((vet_valorlocados[i]*30)/100)
+         lucro_dia <-  lucro_dia + valor_locados
       fimse
    fimpara
    se ((valor_circuito > 0) e (circuito = "S")) entao
-      lucro_dia <- lucro_dia + valor_circuito
-   fimse
+      receita <- receita + valor_circuito
 
-   retorne lucro_dia
+      lucro_dia <- lucro_dia + ((valor_circuito*70)/100)
+   fimse
+   escreval ("A RECEITA DO DIA FOI DE R$", receita,",00")
+   escreval ("O LUCRO DO DIA FOI DE R$", lucro_dia, ",00")
+
+   retorne aux
 fimfuncao
 
+procedimento atualizar_dia()
+var
+   i: inteiro
+   kart: caracter
+inicio
+   se (circuito <> "N") entao
+      repita
+         escreval("MANTER CIRCUITO ALUGADO? S/N")
+         leia(circuito)
+         circuito <- Maiusc(circuito)
+      ate ((circuito = "S") ou (circuito = "N"))
+   fimse
+   
+   para i de 0 ate 14 passo 1 faca
+      se (vet_locados[i] <> "") entao
+         escreval("MANTER KART ", vet_locados[i],"?")
+         leia(kart)
+         se(kart = "S") entao
+         vet_locados[i] <- vet_locados[i]
+         senao
+         vet_locados[i] <- ""
+         vet_valorlocados[i] <- 0
+         fimse
+      fimse
+
+      
+   fimpara
+   
+   
+fimprocedimento
 
 Inicio
    rodada <- "S"
@@ -291,6 +332,7 @@ Inicio
 
          caso 9
             escreval("9. ATUALIZAR DIA")
+            atualizar_dia()
 
          fimescolha
       ate((menu >= 1) e (menu <= 10))
