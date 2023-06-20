@@ -11,6 +11,7 @@ Var
    vet_valor:vetor[0..14] de real
    vet_locados:vetor[0..14] de caracter
    vet_valorlocados:vetor [0..14] de real
+   vet_maioralu: vetor[0..14] de inteiro
    //inteiro
    menu: inteiro
    m: inteiro
@@ -125,12 +126,14 @@ inicio
 
          vet_locados[posicao] <- vet_modelo[posicao]
          vet_valorlocados[posicao] <- vet_valor[posicao]
+         vet_maioralu[posicao] <- vet_maioralu[posicao] + 1
          vet_modelo[posicao] <- ""
          vet_valor[posicao] <- 0
-
-          se(vet_locados[posicao] = i)entao
-            maior_alu <- vet_locados[posicao]
-            qtd_alu <- qtd_alu + 1
+          se(vet_locados[posicao] = vet_maioralu[posicao])entao
+             maior_alu <- vet_locados[posicao]
+          fimse
+          se(vet_maioralu[posicao] > qtd_alu)entao
+             qtd_alu <- vet_maioralu[posicao]
           fimse
          escreval("ALUGAR OUTRO KART DISPONIVEL? S/N")
          leia(sair_aluga)
@@ -170,6 +173,7 @@ inicio
          vet_locados[posicao] <- ""
          vet_valorlocados[posicao] <- 0
 
+
          escreval("DESEJA DEVOLVER MAIS ALGUM? S/N")
          leia(sair_devol)
          sair_devol <- Maiusc(sair_devol)
@@ -188,19 +192,16 @@ funcao mais_ganhou: caracter
 var i: inteiro
    sair_ganho, aux: caracter
 inicio
+qtd_alu <- 0
+   para i de 0 ate 14 passo 1 faca
+       se(vet_maioralu[i] > qtd_alu)entao
+            qtd_alu <- qtd_alu + vet_maioralu[i]
+       fimse
+   fimpara
+      Escreval("O kart que mais gerou ganhos foi o kart ",maior_alu)
+      Escreval("Quantidade de aluguéis: ",qtd_alu )
 
-   Para i de 0 até 14 passo 1 faça
-      Se(vet_locados[i] > maior_alu) então
-         maior_alu <- vet_locados[i]
-         maior_kart <- maior_kart+1
-      FimSe
-   FimPara
-   Se (maior_alu <> "") então
-      Escreval("O kart que mais gerou ganhos foi o kart ", maior_alu)
-      Escreval("Quantidade de aluguéis: ", qtd_alu)
-   Senão
-      Escreval("Nenhum kart foi alugado ainda.")
-   FimSe
+
 
    retorne aux
 fimfuncao
