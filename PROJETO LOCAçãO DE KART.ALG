@@ -40,11 +40,16 @@ inicio
 
 
     enquanto (sair_cadastro = "S") faca
+     repita
       escreval("DIGITE O MODELO DO KART PARA O  CADASTRO:")
       leia(var_modelo)
+     ate(var_modelo <> "")
       vet_modelo[m] <- var_modelo
+      repita
       escreval("DIGITE O VALOR DO KART PARA O  CADASTRO:")
       leia(var_valor)
+      ate(var_valor <> 0)
+
       vet_valor[m] <- var_valor
       m <- m+1
       se(vet_modelo[14] <> "") e (vet_valor[14] <> 0)entao
@@ -121,20 +126,26 @@ inicio
          escreval("KARTS DISPONIVEIS:")
          escreval(listar_karts)
          sair_aluga <- "S"
+         repita
          escreva("DIGITE O NUMERO DO KART QUE VOCE DESEJA: ")
          leia(posicao)
+         ate((posicao >= 0) OU (posicao <=14))
 
          vet_locados[posicao] <- vet_modelo[posicao]
          vet_valorlocados[posicao] <- vet_valor[posicao]
+
          vet_maioralu[posicao] <- vet_maioralu[posicao] + 1
+
          vet_modelo[posicao] <- ""
          vet_valor[posicao] <- 0
-          se(vet_locados[posicao] = vet_maioralu[posicao])entao
+
+          se(vet_locados[posicao] = vet_maioralu[posicao]) entao
              maior_alu <- vet_locados[posicao]
           fimse
-          se(vet_maioralu[posicao] > qtd_alu)entao
+          se(vet_maioralu[posicao] > qtd_alu) entao
              qtd_alu <- vet_maioralu[posicao]
           fimse
+
          escreval("ALUGAR OUTRO KART DISPONIVEL? S/N")
          leia(sair_aluga)
          sair_aluga <- Maiusc(sair_aluga)
@@ -165,9 +176,10 @@ inicio
       se(vazio = 1)entao
          escreval("DESEJA DEVOLVER QUAL KART LOCADO?")
          escreval(listar_locados)
+         repita
          escreva("DIGITE O NUMERO CORRESPONDENTE: ")
          leia(posicao)
-
+         ate((posicao >= 0) ou (posicao <=14))
          vet_modelo[posicao] <- vet_locados[posicao]
          vet_valor[posicao] <- vet_valorlocados[posicao]
          vet_locados[posicao] <- ""
@@ -198,7 +210,7 @@ qtd_alu <- 0
             qtd_alu <- qtd_alu + vet_maioralu[i]
        fimse
    fimpara
-      Escreval("O kart que mais gerou ganhos foi o kart ",maior_alu)
+      Escreval("O kart que mais gerou ganhos foi o  ",maior_alu)
       Escreval("Quantidade de aluguéis: ",qtd_alu )
 
 
@@ -251,6 +263,8 @@ inicio
    fimse
    escreval ("A RECEITA DO DIA FOI DE R$", receita,",00")
    escreval ("O LUCRO DO DIA FOI DE R$", lucro_dia, ",00")
+   
+
 
    retorne aux
 fimfuncao
@@ -279,7 +293,6 @@ inicio
             vet_valor[i] <- vet_valorlocados[i]
          fimse
       fimse
-
 
    fimpara
 
