@@ -1,5 +1,5 @@
-Algoritmo "Projeto LocaÁ„o de Kart"
-// Disciplina : [Conceitos de AlgorÌtmos]
+Algoritmo "Projeto Loca√ß√£o de Kart"
+// Disciplina : [Conceitos de Algor√≠tmos]
 // Professor : Gilberto
 // Nome da 'empresa/grupo de desenvolvimento' : GRUPO AVANT-GARD
 // Integrantes do grupo: Jullia, Andreia, Maria Clara, Adriano, Pedro
@@ -53,7 +53,7 @@ inicio
       vet_valor[m] <- var_valor
       m <- m+1
       se(vet_modelo[14] <> "") e (vet_valor[14] <> 0)entao
-         escreval("NUMERO M¡XIMO DE CADASTROS ATINGIDOS.")
+         escreval("NUMERO M√ÅXIMO DE CADASTROS ATINGIDOS.")
             sair_cadastro <- "N"
       senao
       escreval("DESEJA CADASTRAR OUTRO VEICULO? S/N")
@@ -74,14 +74,14 @@ inicio
       fimse
    fimpara
 
-   se (ver_vazio = 1) ent„o
+   se (ver_vazio = 1) ent√£o
       para i de 0 ate 14 passo 1 faca
          se((vet_modelo[i] <> "") e (vet_valor[i] <> 0))entao
             escreval(i,". ",vet_modelo[i]," | ","VALOR: R$ ",vet_valor[i]," ,00")
          fimse
       fimpara
    senao
-      escreval("NAO HAÅ KARTS DISPONIVEIS OU CADASTRADOS")
+      escreval("NAO HA¬Å KARTS DISPONIVEIS OU CADASTRADOS")
    fimse
 
    retorne aux
@@ -104,7 +104,7 @@ inicio
          fimse
       fimpara
    senao
-      escreval("NAO HAÅKARTS LOCADOS NO MOMENTO.")
+      escreval("NAO HA¬ÅKARTS LOCADOS NO MOMENTO.")
    fimse
 
    retorne aux
@@ -149,7 +149,7 @@ inicio
          escreval("ALUGAR OUTRO KART DISPONIVEL? S/N")
          leia(sair_aluga)
          sair_aluga <- Maiusc(sair_aluga)
-         se (sair_aluga = "N") ent„o
+         se (sair_aluga = "N") ent√£o
             sair_aluga <- "N"
          fimse
       senao
@@ -189,7 +189,7 @@ inicio
          escreval("DESEJA DEVOLVER MAIS ALGUM? S/N")
          leia(sair_devol)
          sair_devol <- Maiusc(sair_devol)
-         se (sair_devol = "N") ent„o
+         se (sair_devol = "N") ent√£o
             sair_devol <- "N"
          fimse
       senao
@@ -211,7 +211,7 @@ qtd_alu <- 0
        fimse
    fimpara
       Escreval("O kart que mais gerou ganhos foi o  ",maior_alu)
-      Escreval("Quantidade de aluguÈis: ",qtd_alu )
+      Escreval("Quantidade de alugu√©is: ",qtd_alu )
 
 
 
@@ -228,7 +228,7 @@ inicio
          circuito <- Maiusc(circuito)
       ate ((circuito = "S") ou (circuito = "N"))
    senao
-      escreval("O CIRCUITO J¡ EST¡ LOCADO PELO VALOR DE R$", valor_circuito, ",00")
+      escreval("O CIRCUITO J√Å EST√Å LOCADO PELO VALOR DE R$", valor_circuito, ",00")
    fimse
 
    se (valor_circuito = 0) entao
@@ -291,6 +291,8 @@ inicio
          senao
             vet_modelo[i] <- vet_locados[i]
             vet_valor[i] <- vet_valorlocados[i]
+            vet_locados[i] <- ""
+            vet_valorlocados[i] <- 0
          fimse
       fimse
 
@@ -302,8 +304,8 @@ fimprocedimento
 Inicio
    rodada <- "S"
    enquanto (rodada = "S") faca
-      escreval("BEM-VINDO AO GERENCIAMENTO DE LOCA«AO DE KARTS!!")
-      escreval("DIGITE UM NUMERO PARA SELECIONAR A OP«AO DESEJADA")
+      escreval("BEM-VINDO AO GERENCIAMENTO DE LOCA√áAO DE KARTS!!")
+      escreval("DIGITE UM NUMERO PARA SELECIONAR A OP√áAO DESEJADA")
       escreval
 
       repita
@@ -314,7 +316,7 @@ Inicio
          escreval("5. DEVOLVER UM KART")
          escreval("6. KART QUE MAIS GEROU GANHOS")
          escreval("7. RECEITA E LUCROS DO DIA")
-         escreval("8. LOCA«√O DE CIRCUITO")
+         escreval("8. LOCA√á√ÉO DE CIRCUITO")
          escreval("9. ATUALIZAR DIA")
          escreval("10. SAIR DO PROGRAMA")
          escreval
@@ -351,7 +353,7 @@ Inicio
             escreval("7. RECEITA E LUCROS DO DIA (Considerando karts locados)")
             escreval(receita_dia)
          caso 8
-            escreval("8. LOCA«√O DE CIRCUITO")
+            escreval("8. LOCA√á√ÉO DE CIRCUITO")
             escreval(alugar_circuito)
 
          caso 9
